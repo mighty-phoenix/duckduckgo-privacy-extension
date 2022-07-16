@@ -8,7 +8,7 @@ const { removeBroken } = require('./utils.es6')
 
 const ports = new Map()
 
-function init () {
+export function init () {
     browser.runtime.onConnect.addListener(connected)
 }
 
@@ -96,18 +96,12 @@ function connected (port) {
     })
 }
 
-function postMessage (tabId, action, message) {
+export function postMessage (tabId, action, message) {
     if (ports.has(tabId)) {
         ports.get(tabId).postMessage(JSON.stringify({ tabId, action, message }))
     }
 }
 
-function isActive (tabId) {
+export function isActive (tabId) {
     return ports.has(tabId)
-}
-
-module.exports = {
-    init,
-    postMessage,
-    isActive
 }

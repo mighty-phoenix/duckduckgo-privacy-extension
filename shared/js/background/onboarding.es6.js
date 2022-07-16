@@ -55,12 +55,14 @@ function onDocumentEnd ({
                                 chrome.runtime.sendMessage(extensionId, e.data.type, (response) => {
                                     e.source.postMessage(
                                         { type: 'healthCheckResponse', isAlive: !chrome.runtime.lastError },
+                                        /** @ts-ignore */
                                         e.origin
                                     )
                                 })
                             } catch (err) {
                                 e.source.postMessage(
                                     { type: 'healthCheckResponse', isAlive: false },
+                                    /** @ts-ignore */
                                     e.origin
                                 )
                             }
@@ -109,7 +111,9 @@ function onDocumentStart ({ duckDuckGoSerpHostname }) {
     window.addEventListener('message', function handleMessage (e) {
         if (e.origin === `https://${duckDuckGoSerpHostname}` && e.data.type === 'documentStartDataRequest') {
             window.removeEventListener('message', handleMessage)
-            e.source.postMessage({ type: 'documentStartDataResponse', payload: { hadFocusOnStart } }, e.origin)
+            e.source.postMessage({ type: 'documentStartDataResponse', payload: { hadFocusOnStart } },
+                /** @ts-ignore */
+                e.origin)
         }
     })
 }

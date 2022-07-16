@@ -7,7 +7,7 @@ const trackerutils = require('./tracker-utils')
 const https = require('./https.es6')
 const Companies = require('./companies.es6')
 const tabManager = require('./tab-manager.es6')
-const ATB = require('./atb.es6')
+const { ATB } = require('./atb.es6')
 const browserWrapper = require('./wrapper.es6')
 const settings = require('./settings.es6')
 const devtools = require('./devtools.es6')
@@ -18,6 +18,7 @@ const {
 } = require('./url-parameters.es6')
 const ampProtection = require('./amp-protection.es6')
 
+/** @type {false | string[]} */
 const debugRequest = false
 
 function buildResponse (url, requestData, tab, isMainFrame) {
@@ -81,7 +82,7 @@ function handleAmpRedirect (thisTab, url) {
  * - Upgrade http -> https where possible
  */
 
-function handleRequest (requestData) {
+export function handleRequest (requestData) {
     const tabId = requestData.tabId
     // Skip requests to background tabs
     if (tabId === -1) { return }
@@ -389,5 +390,3 @@ function isSameDomainRequest (tab, req) {
         return true
     }
 }
-
-exports.handleRequest = handleRequest

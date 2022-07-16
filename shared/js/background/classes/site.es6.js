@@ -13,6 +13,10 @@ const privacyPractices = require('../privacy-practices.es6')
 const Grade = require('@duckduckgo/privacy-grade').Grade
 const browserWrapper = require('../wrapper.es6')
 
+/**
+ * @typedef {'allowlisted' | 'allowlistOptIn' | 'denylisted'} allowlistName
+ */
+
 class Site {
     constructor (url) {
         this.url = url || ''
@@ -27,8 +31,12 @@ class Site {
         this.domain = domain
         this.trackerUrls = []
         this.grade = new Grade()
+
+        /** @type {settings.allowlistedValue} */
         this.allowlisted = false // user-allowlisted sites; applies to all privacy features
+        /** @type {settings.allowlistedValue} */
         this.allowlistOptIn = false
+        /** @type {settings.allowlistedValue} */
         this.denylisted = false
         this.setListStatusFromGlobal()
 
@@ -68,6 +76,7 @@ class Site {
      * and set the new site list statuses
      */
     setListStatusFromGlobal () {
+        /** @type {allowlistName[]} */
         const globalLists = ['allowlisted', 'allowlistOptIn', 'denylisted']
         globalLists.forEach((name) => {
             const list = settings.getSetting(name) || {}
@@ -75,6 +84,10 @@ class Site {
         })
     }
 
+    /**
+     * @param {allowlistName} listName
+     * @param {settings.allowlistedValue} value
+     */
     setListValue (listName, value) {
         this[listName] = value
     }

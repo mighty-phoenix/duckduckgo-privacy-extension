@@ -17,7 +17,7 @@ const ACCEPTED_URL_PARAMS = ['natb', 'cp', 'npi']
 
 let dev = false
 
-const ATB = (() => {
+export const ATB = (() => {
     // regex to match ddg urls to add atb params to.
     // Matching subdomains, searches, and newsletter page
     const regExpAboutPage = /^https?:\/\/([\w-]+\.)?duckduckgo\.com\/(\?.*|about#newsletter)/
@@ -224,5 +224,3 @@ settings.ready().then(() => {
     // set initial uninstall url
     browserWrapper.setUninstallURL(ATB.getSurveyURL())
 })
-
-module.exports = ATB

@@ -24,9 +24,9 @@ function shouldBlockHeaders (request, tab, requestIsTracker) {
 }
 
 /**
- * @param {{tabId: number, url: string, initiator: url, type: string, responseHeaders: Array<{name: string, value:string}>}} request
+ * @param {{tabId: number, requestId: number, url: string, initiator: URL, type: string, responseHeaders: Array<{name: string, value:string}>}} request
  *
- * @returns {responseHeaders: Array<{name: string, value:string}>?}
+ * @returns {{responseHeaders: Array<{name: string, value:string}>?}}
  */
 function dropTracking3pCookiesFromResponse (request) {
     const tab = tabManager.get({ tabId: request.tabId })
@@ -56,9 +56,9 @@ function dropTracking3pCookiesFromResponse (request) {
 }
 
 /**
- * @param {{tabId: number, url: string, initiator: url, type: string, requestHeaders: Array<{name: string, value:string}>}} e
+ * @param {{tabId: number, requestId: number, url: string, initiator: URL, type: string, requestHeaders: Array<{name: string, value:string}>}} request
  *
- * @returns {requestHeaders: Array<{name: string, value:string}>?}
+ * @returns {{requestHeaders: Array<{name: string, value:string}>?}}
  */
 function dropTracking3pCookiesFromRequest (request) {
     const tab = tabManager.get({ tabId: request.tabId })

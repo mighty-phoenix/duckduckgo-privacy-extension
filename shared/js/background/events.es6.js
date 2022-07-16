@@ -6,7 +6,7 @@
  */
 import browser from 'webextension-polyfill'
 import * as messageHandlers from './message-handlers'
-const ATB = require('./atb.es6')
+const { ATB } = require('./atb.es6')
 const utils = require('./utils.es6')
 const experiment = require('./experiments.es6')
 const settings = require('./settings.es6')
@@ -27,7 +27,7 @@ const manifestVersion = browserWrapper.getManifestVersion()
 
 /**
  * Produce a random float, same output as Math.random()
- * @returns {float}
+ * @returns {number}
  */
 function getFloat () {
     return crypto.getRandomValues(new Uint32Array(1))[0] / 2 ** 32

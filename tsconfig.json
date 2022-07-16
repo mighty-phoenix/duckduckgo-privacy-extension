@@ -10,9 +10,8 @@
         "allowSyntheticDefaultImports": true
     },
     "include": [
-    ],
-    "files": [
-        "shared/js/devtools/panel.es6.js",
-        "shared/js/background/devtools.es6.js"
+        "shared/js/background/**/*.js",
+        "shared/js/devtools/**/*.js",
+        "shared/js/shared-utils/**/*.js"
     ]
 }
