@@ -1,5 +1,5 @@
 const load = require('./../load.es6')
-const Dexie = require('dexie')
+const { Dexie } = require('dexie')
 const constants = require('../../../data/constants')
 const settings = require('./../settings.es6')
 const browserWrapper = require('./../wrapper.es6')
@@ -7,6 +7,14 @@ const extensionConfig = require('./../../../data/bundled/extension-config.json')
 const etags = require('../../../data/etags.json')
 
 const configNames = constants.tdsLists.map(({ name }) => name)
+
+/**
+ * @typedef {Object} TDSList
+ * @property {string} name
+ * @property {string} source
+ * @property {string} url
+ * @property {{[k: string]: string}} [channels]
+ */
 
 class TDSStorage {
     constructor () {
@@ -101,18 +109,22 @@ class TDSStorage {
         ))
     }
 
+    /**
+     * @param {TDSList} list
+     */
     async getList (list) {
         // If initOnInstall was called, await the updating from the local bundles before fetching
-        if (this.installing) {
+        if (this.isInstalling) {
             await this._installingPromise
         }
+        /** @type {TDSList} */
         const listCopy = JSON.parse(JSON.stringify(list))
         const etag = settings.getSetting(`${listCopy.name}-etag`) || ''
         const version = this.getVersionParam()
         const activeExperiment = settings.getSetting('activeExperiment')
         const channel = settings.getSetting(`${listCopy.name}-channel`) || ''
 
-        let experiment = ''
+        let experiment
         if (activeExperiment) {
             experiment = settings.getSetting('experimentData')
         }
@@ -209,7 +221,7 @@ class TDSStorage {
     }
 
     storeInLocalDB (name, data) {
-        return this.dbc.tdsStorage.put({ name: name, data: data })
+        return this.dbc.table('tdsStorage').put({ name: name, data: data })
     }
 
     parsedata (name, data) {
@@ -236,7 +248,7 @@ class TDSStorage {
 
         // check delta for last update
         if (lastTdsUpdate) {
-            const delta = now - new Date(lastTdsUpdate)
+            const delta = now - lastTdsUpdate
 
             if (delta > ONEDAY) {
                 versionParam = `&v=${version}`
@@ -273,9 +285,9 @@ class TDSStorage {
     }
 
     removeLegacyLists () {
-        this.dbc.tdsStorage.delete('ReferrerExcludeList')
-        this.dbc.tdsStorage.delete('brokenSiteList')
-        this.dbc.tdsStorage.delete('protections')
+        this.dbc.table('tdsStorage').delete('ReferrerExcludeList')
+        this.dbc.table('tdsStorage').delete('brokenSiteList')
+        this.dbc.table('tdsStorage').delete('protections')
     }
 
     onUpdate (name, listener) {

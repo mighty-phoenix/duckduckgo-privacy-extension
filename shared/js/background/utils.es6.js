@@ -29,7 +29,7 @@ export function extractHostFromURL (url, shouldKeepWWW) {
 }
 
 // Removes information from a URL, such as path, user information, and optionally sub domains
-export function extractLimitedDomainFromURL (url, { keepSubdomains } = {}) {
+export function extractLimitedDomainFromURL (url, { keepSubdomains } = { keepSubdomains: false }) {
     if (!url) return undefined
     try {
         const parsedURL = new URL(url)
@@ -323,8 +323,7 @@ export function satisfiesMinVersion (minVersionString, extensionVersionString) {
  * parameter to check if the state is equeal to other states (i.e. state === 'beta').
  *
  * @param {String} featureName - the name of the feature
- * @param {String} customState - An optional custom state to check for
- * @returns {bool} - if feature is enabled
+ * @returns {boolean} - if feature is enabled
  */
 export function isFeatureEnabled (featureName) {
     const feature = tdsStorage.config.features[featureName]

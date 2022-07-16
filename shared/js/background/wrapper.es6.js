@@ -172,7 +172,7 @@ function convertScriptingAPIOptionsForTabsAPI (options) {
  * 1 - https://developer.chrome.com/docs/extensions/reference/scripting/#method-executeScript
  * @param {object} options
  *   Script injection options.
- * @param {*} result
+ * @returns {Promise<any>}
  *   The result of executing the script.
  */
 export async function executeScript (options) {
@@ -220,7 +220,7 @@ const sessionStorageFallback = sessionStorageSupported ? null : new Map()
  *       See https://developer.chrome.com/docs/extensions/reference/storage/#property-session-session-QUOTA_BYTES
  * @param {string} key
  *   The storage key to write to.
- * @param {*} value
+ * @param {*} data
  *   The value to write.
  */
 export async function setToSessionStorage (key, data) {
@@ -239,7 +239,7 @@ export async function setToSessionStorage (key, data) {
  * Retrieve a value from memory.
  * @param {string} key
  *   The storage key to retrieve.
- * @return {*}
+ * @return {Promise<any>}
  *   The retrieved value.
  */
 export async function getFromSessionStorage (key) {

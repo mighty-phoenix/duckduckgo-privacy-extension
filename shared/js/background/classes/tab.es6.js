@@ -130,7 +130,7 @@ class Tab {
 
     /**
      * Adds an entry to the tab webResourceAccess list.
-     * @param {string} URL to the web accessible resource
+     * @param {string} resourceName URL to the web accessible resource
      * @returns {string} generated access key
      **/
     addWebResourceAccess (resourceName) {
@@ -144,8 +144,8 @@ class Tab {
      * Access to web accessible resources needs to have the correct key passed in the URL
      * and the requests needs to happen within 1 second since the generation of the key
      * in addWebResourceAccess
-     * @param {string} web accessible resource URL
-     * @returns {bool} is access to the resource allowed
+     * @param {string} resourceURL web accessible resource URL
+     * @returns {boolean} is access to the resource allowed
      **/
     hasWebResourceAccess (resourceURL) {
         // no record of web resource access for this tab

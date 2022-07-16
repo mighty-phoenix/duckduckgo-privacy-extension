@@ -16,7 +16,7 @@ module.exports = (uaString) => {
         version = parsedUaParts[2]
 
         // Brave doesn't include any information in the UserAgent
-        if (globalThis.navigator.brave) {
+        if ('brave' in globalThis.navigator) {
             browser = 'Brave'
         }
     } catch (e) {

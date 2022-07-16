@@ -30,7 +30,7 @@ class Site {
         this.allowlisted = false // user-allowlisted sites; applies to all privacy features
         this.allowlistOptIn = false
         this.denylisted = false
-        this.setListStatusFromGlobal(domain)
+        this.setListStatusFromGlobal()
 
         /**
          * Broken site reporting relies on the www. prefix being present as a.com matches *.a.com
